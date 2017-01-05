@@ -1,0 +1,119 @@
+local b = book.GetComponent("BookController")
+local weather = book.GetComponent("WeatherController")
+
+local commandNames = {}
+commandNames["page1"]= 6
+commandNames["page2"]= 14
+commandNames["page3"]= 28
+commandNames["page4"]= 36
+commandNames["page5"]= 45
+commandNames["page6"]= 54
+commandNames["page7"]= 63
+commandNames["page8"]= 75
+commandNames["page9"]= 86
+commandNames["page10"]= 94
+
+function nextPage()
+	local res = b.swipeLeftHandle()
+
+	if (res == true) then
+		local curPageNumber = b.getCurrentPageNumber()
+		local commandIndex = 0
+
+		local command = string.format("page%d", curPageNumber)
+
+		commandIndex = commandNames[command]
+
+		local block = flowchart.FindBlock("Start")
+
+		block.JumpToCommandIndex = commandIndex
+		block.Execute()
+	end
+end
+
+
+function backPage()
+	local res = b.swipeRightHandle()
+
+	if (res == true) then
+		local curPageNumber = b.getCurrentPageNumber()
+		local commandIndex = 0
+
+		local command = string.format("page%d", curPageNumber)
+
+		commandIndex = commandNames[command]
+		local block = flowchart.FindBlock("Start")
+		block.JumpToCommandIndex = commandIndex
+		block.Execute()
+	end
+end
+
+function resetAnimationFlag()
+	b.resetAnimationFlag()
+end
+
+function fishDiving()
+	local clip = "CloseLeftItemsPage"
+	b.playAnimationNextPage(clip)
+end
+
+function weatherForPage(page)
+		weather.transitionDurationChanged(4)
+
+		--house (lodge)
+		if (page == 1) then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(false, 0)
+
+		--ocean
+		elseif page == 2 then
+			weather.invokeWind(true)
+			weather.invokeRainByLevel(false, 0)
+
+		--house (lodge)
+		elseif page == 3 then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(false, 0)
+
+		--ocean
+		elseif page == 4 then
+			weather.invokeWind(true)
+			weather.invokeRainByLevel(false, 0)
+
+		--house	(building)
+		elseif page == 5 then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(false, 0)
+
+		--ocean
+		elseif page == 6 then
+			weather.invokeWind(true);
+			weather.invokeRainByLevel(true, 3)
+
+		--house (castle)
+		elseif page == 7 then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(true, 1)
+
+		--ocean
+		elseif page == 8 then
+			weather.invokeWind(true)
+			weather.invokeRainByLevel(true, 4)
+			weather.InvokeLightningStrikeInCoInSuccession()
+
+		--house (lodge)
+		elseif page == 9 then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(true, 2)
+
+		--finish
+		elseif page == 10 then
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(false, 0)
+
+		else
+			weather.invokeWind(false)
+			weather.invokeRainByLevel(false, 0)
+		end
+
+end
