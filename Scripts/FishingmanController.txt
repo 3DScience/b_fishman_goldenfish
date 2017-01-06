@@ -21,13 +21,26 @@ function nextPage()
 		local commandIndex = 0
 
 		local command = string.format("page%d", curPageNumber)
-
+		print("nextPage");
+		print(command);
 		commandIndex = commandNames[command]
-
+		print("commandIndex")
+		print(commandIndex)
 		local block = flowchart.FindBlock("Start")
 
-		block.JumpToCommandIndex = commandIndex
-		block.Execute()
+		--block.JumpToCommandIndex = commandIndex
+		--block.Execute()
+
+		if (block.State == 1) then
+			print("Block is still available")
+			block.JumpToCommandIndex = commandIndex
+			block.Execute()
+
+		else
+			print("Block is not available")
+			runblock(flowchart, "Start", commandIndex, true)
+		end
+
 	end
 end
 
@@ -40,11 +53,25 @@ function backPage()
 		local commandIndex = 0
 
 		local command = string.format("page%d", curPageNumber)
-
+		print("backPage")
+		print(command)
 		commandIndex = commandNames[command]
+		print("commandIndex")
+		print(commandIndex)
 		local block = flowchart.FindBlock("Start")
-		block.JumpToCommandIndex = commandIndex
-		block.Execute()
+--		block.JumpToCommandIndex = commandIndex
+--		block.Execute()
+
+		if (block.State == 1) then
+			print("Block is still available")
+			block.JumpToCommandIndex = commandIndex
+			block.Execute()
+
+		else
+			print("Block is not available")
+			runblock(flowchart, "Start", commandIndex, true)
+		end
+
 	end
 end
 
@@ -57,9 +84,14 @@ function fishDiving()
 	b.playAnimationNextPage(clip)
 end
 
+function invokeLightningStrikeInCoInSuccession()
+	print("invokeLightning")
+	weather.InvokeLightningStrikeInCoInSuccession()
+end
+
 function weatherForPage(page)
 		weather.transitionDurationChanged(4)
-
+		weather.invokeCloud(false)
 		--house (lodge)
 		if (page == 1) then
 			weather.invokeWind(false)
@@ -88,7 +120,7 @@ function weatherForPage(page)
 		--ocean
 		elseif page == 6 then
 			weather.invokeWind(true);
-			weather.invokeRainByLevel(true, 3)
+			weather.invokeRainByLevel(true, 2)
 
 		--house (castle)
 		elseif page == 7 then
@@ -99,11 +131,13 @@ function weatherForPage(page)
 		elseif page == 8 then
 			weather.invokeWind(true)
 			weather.invokeRainByLevel(true, 4)
+			weather.invokeCloud(true)
 			weather.InvokeLightningStrikeInCoInSuccession()
 
 		--house (lodge)
 		elseif page == 9 then
 			weather.invokeWind(false)
+			weather.invokeCloud(true)
 			weather.invokeRainByLevel(true, 2)
 
 		--finish
