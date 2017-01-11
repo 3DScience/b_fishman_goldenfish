@@ -2,6 +2,7 @@ local b = book.GetComponent("BookController")
 local weather = book.GetComponent("WeatherController")
 
 local commandNames = {}
+commandNames["page0"]= 0
 commandNames["page1"]= 6
 commandNames["page2"]= 14
 commandNames["page3"]= 28
@@ -119,7 +120,7 @@ function weatherForPage(page)
 
 		--ocean
 		elseif page == 6 then
-			weather.invokeWind(true);
+			weather.invokeWind(true)
 			weather.invokeRainByLevel(true, 2)
 
 		--house (castle)
