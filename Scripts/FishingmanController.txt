@@ -3,16 +3,16 @@ local weather = book.GetComponent("WeatherController")
 
 local commandNames = {}
 commandNames["page0"]= 0
-commandNames["page1"]= 6
-commandNames["page2"]= 14
-commandNames["page3"]= 28
-commandNames["page4"]= 36
-commandNames["page5"]= 45
-commandNames["page6"]= 54
-commandNames["page7"]= 63
-commandNames["page8"]= 75
-commandNames["page9"]= 86
-commandNames["page10"]= 94
+commandNames["page1"]= 7
+commandNames["page2"]= 16
+commandNames["page3"]= 25
+commandNames["page4"]= 33
+commandNames["page5"]= 41
+commandNames["page6"]= 49
+commandNames["page7"]= 57
+commandNames["page8"]= 65
+commandNames["page9"]= 74
+commandNames["page10"]= 83
 
 function nextPage()
 	local res = b.swipeLeftHandle()
