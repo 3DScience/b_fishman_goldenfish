@@ -1,45 +1,26 @@
 local b = book.GetComponent("BookController")
 local weather = book.GetComponent("WeatherController")
 
-local commandNames = {}
-commandNames["page0"]= 0
-commandNames["page1"]= 4
-commandNames["page2"]= 12
-commandNames["page3"]= 20
-commandNames["page4"]= 27
-commandNames["page5"]= 34
-commandNames["page6"]= 41
-commandNames["page7"]= 48
-commandNames["page8"]= 55
-commandNames["page9"]= 62
-commandNames["page10"]= 69
-
 function nextPage()
 	local res = b.swipeLeftHandle()
 
 	if (res == true) then
 		local curPageNumber = b.getCurrentPageNumber()
-		local commandIndex = 0
 
 		local command = string.format("page%d", curPageNumber)
 		print("nextPage");
 		print(command);
-		commandIndex = commandNames[command]
-		print("commandIndex")
-		print(commandIndex)
-		local block = flowchart.FindBlock("Start")
-
-		--block.JumpToCommandIndex = commandIndex
-		--block.Execute()
+		--local block = flowchart.FindBlock("Start")
+		flowchart.StopAllBlocks()
+		local block = flowchart.FindBlock(command)
 
 		if (block.State == 1) then
 			print("Block is still available")
-			block.JumpToCommandIndex = commandIndex
 			block.Execute()
 
 		else
 			print("Block is not available")
-			runblock(flowchart, "Start", commandIndex, true)
+			runblock(flowchart, command, 0, true)
 		end
 
 	end
@@ -51,26 +32,20 @@ function backPage()
 
 	if (res == true) then
 		local curPageNumber = b.getCurrentPageNumber()
-		local commandIndex = 0
 
 		local command = string.format("page%d", curPageNumber)
 		print("backPage")
 		print(command)
-		commandIndex = commandNames[command]
-		print("commandIndex")
-		print(commandIndex)
-		local block = flowchart.FindBlock("Start")
---		block.JumpToCommandIndex = commandIndex
---		block.Execute()
+		flowchart.StopAllBlocks()
+		local block = flowchart.FindBlock(command)
 
 		if (block.State == 1) then
 			print("Block is still available")
-			block.JumpToCommandIndex = commandIndex
 			block.Execute()
 
 		else
 			print("Block is not available")
-			runblock(flowchart, "Start", commandIndex, true)
+			runblock(flowchart, command, 0, true)
 		end
 
 	end
